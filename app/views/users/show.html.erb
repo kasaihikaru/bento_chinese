@@ -1,0 +1,128 @@
+<% provide :title, " | #{@user.nickname}さん" %>
+
+<div class="container index-content">
+  <div class="row">
+    <!-- ユーザーメニュー -->
+    <%= render :partial => 'users/usermenu', :locals=>{ user: @user, fold: @fold, folds: @folds} %>
+
+    <div class="main col-xs-12 col-lg-10">
+<!-- プロフィール -->
+      <div class="hasami">
+      <div class="wrapper-profile">
+        <div class="profile clearfix">
+          <div class="p-name">
+            <%= @user.nickname %>
+          </div>
+          <% if @user.avatar? %>
+            <div class="p-img">
+              <%= image_tag(@user.avatar, :alt => "プロフィール画像") %>
+            </div>
+          <% end %>
+          <div class="p-blog">
+            <table>
+              <tr>
+                <th>ブログ、HP：</th>
+                <td><a href="<%= @user.blog %>"><%= @user.blog %></a></td>
+              </tr>
+            </table>
+          </div>
+          <div class="p-intro">
+            <dl>
+              <dt>自己紹介：</dt>
+              <dd><%= simple_format(@user.introduction) %></dd>
+            </dl>
+          </div>
+          <% if user_signed_in? && current_user.id == @user.id %>
+            <div class="p-edit">
+              <a href="/users/edit"><button class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i>Edit</button></a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      </div>
+
+
+<!-- タイムライン -->
+      <div class="post">
+        <% @sentences.each do |sentence| %>
+          <div id="timeline-<%= sentence.id %>">
+            <div class="post">
+              <div class="post-part">
+                <table class="table table-bordered sentence-table">
+                  <thead>
+                    <tr class="second-color">
+                    <th class="p-header">
+                      <% if sentence.user.avatar? %>
+                        <%= image_tag(sentence.user.avatar) %>
+                      <% end %>
+                      <div class="tate">
+                        <span class="index-name"><%= sentence.user.nickname %></span>
+                        <time><%= time_ago_in_words sentence.created_at %></time>前
+                      </div>
+                      <div class="p-edit">
+                        <% if user_signed_in? && current_user.id == @user.id && sentence.user == current_user%>
+                          <%= link_to sentence_like_path(sentence_id: sentence.id, id: current_user.likes.where(sentence_id: sentence.id).ids[0] ), method: :delete, data: { confirm: "本当に消しますか？" }, remote: true do %>
+                              <button class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                          <% end %>
+                          <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-download-alt"></i> Add<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <% @myfolds.each do |fold| %>
+                              <li>
+                                <%= link_to sentence_fold_sentences_path(sentence_id: sentence.id, fold_id: fold.id), method: :post, remote: true do %>
+                                  <i class="glyphicon glyphicon-inbox"></i> <%= fold.name %>
+                                <% end %>
+                              </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        <% end %>
+                      </div>
+                      <% if user_signed_in? && sentence.user_id != current_user.id %>
+                        <div id="like-buttons-<%= sentence.id %>" class="btnplace">
+                          <%= render :partial => 'likes/like', :locals=>{:sentence=>sentence, :like => sentence.likes.where(user_id: current_user.id).first, myfolds: @myfolds} %>
+                        </div>
+                      <% end %>
+                    </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><th><%= simple_format(sentence.ja) %></th></tr>
+                    <tr class="en_sentence"><th><%= simple_format(sentence.ch) %></th></tr>
+                    <tr><th><%= simple_format(sentence.pin) %></th></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="wrapper">
+                <button type="button" class="btn btn-original btn-sm" data-toggle="collapse" data-target="#words-open<%= sentence.id %>">Words</button>
+              </div>
+              <div id="words-open<%= sentence.id %>" class="collapse words-open">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <table class="table table-bordered words-table .table-responsive">
+                      <thead>
+                        <tr class="second-color"><th>単語（日本語）</th><th>単語（中国語）</th><th>ピンイン</th></tr>
+                      </thead>
+                      <tbody>
+                        <% sentence.words.each do |word| %>
+                          <tr>
+                            <th><%= word.ja %></th>
+                            <th><%= word.ch %></th>
+                            <th><%= word.pin %></th>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="wrapper-for-pagination second-color ten-radi">
+        <%= paginate @sentences %>
+      </div>
+    </div>
+  </div>
+</div>

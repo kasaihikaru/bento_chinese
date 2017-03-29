@@ -1,0 +1,218 @@
+<% provide :title, " | #{@user.nickname}さん" %>
+
+<div class="container index-content">
+  <div class="row">
+    <!-- ユーザーメニュー -->
+    <%= render :partial => 'users/usermenu', :locals=>{ user: @user, fold: @fold, folds: @folds} %>
+
+
+    <div class="main col-xs-12 col-lg-10">
+<!-- 新しい文 -->
+      <% if user_signed_in? && current_user.id == @user.id %>
+        <div class="wrapper-createsentence first-color">
+          <div class="fold-edit cleafix">
+            <%= form_for (@current_fold) do |f| %>
+              <h1><i class="glyphicon glyphicon-inbox"></i> <%= @current_fold.name %></h1>
+              <div class="for-right">
+                <%= f.text_field :name, class: "form-control newbox", :required => true %>
+                <%= button_tag( class: "btn btn-original") do %>
+                  Change Name
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div class="create-newsentence">
+            <%= form_for (@sentence) do |s| %>
+              <div class="form-group">
+                <h3>新しい文を作成する</h3>
+                <%= s.text_area :ja, placeholder: "文章(日本語)", class: "form-control", :required => true %>
+                <%= s.text_area :ch, placeholder: "文章(中国語)", id: "englishsentence", class: "form-control", :required => true %>
+              </div>
+              <!-- like -->
+              <%= s.fields_for :like do |like| %>
+                <%= like.hidden_field :user_id ,value: @user.id %>
+              <% end %>
+              <!-- fold -->
+              <%= s.fields_for :fold_sentence do |fold| %>
+                <%= fold.hidden_field :fold_id ,value: @current_fold.id %>
+              <% end %>
+              <div class="clearfix">
+                <div id="auto-words" class="btn btn-default">
+                  中国語の単語を抜き出す
+                </div>
+                <a data-toggle="modal" href="#myModal" class="">(詳細)</a>
+                <div class="modal fade" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                        <%= render :partial => "abouts/auto" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <ul>
+                  <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                  <div class="wrapper">
+                  <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#more-words"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                  </div>
+                  <div id="more-words" class="collapse">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                        <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                      </div>
+                    </div>
+                  </div>
+                </ul>
+              </div>
+              <div class="form-group">
+                <%= s.submit "作成", class: "btn btn-original withripple" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+
+
+
+
+<!-- タイムライン -->
+      <div class="post">
+        <% @sentences.each do |sentence| %>
+          <div id="timeline-<%= sentence.id %>">
+            <div class="post">
+              <div class="post-part">
+                <table class="table table-bordered sentence-table">
+                  <thead>
+                    <tr class="second-color">
+                    <th class="p-header">
+                      <% if sentence.user.avatar? %>
+                        <%= image_tag(sentence.user.avatar) %>
+                      <% end %>
+                      <div class="tate">
+                        <span class="index-name"><%= sentence.user.nickname %></span>
+                        <time><%= time_ago_in_words sentence.created_at %></time>前
+                      </div>
+                      <div class="p-edit">
+                        <% if user_signed_in? && current_user.id == @user.id && sentence.user == current_user %>
+                          <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i><span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <%= link_to edit_sentence_path(id: sentence.id, fold_id: @current_fold.id ), method: :get do %>
+                                  <i class="glyphicon glyphicon-pencil"></i> Edit
+                                <% end %>
+                              </li>
+                              <li>
+                                <%= link_to sentence_fold_sentence_path(sentence_id: sentence.id, id: sentence.fold_sentences.where(fold_id: @current_fold.id).ids[0] ), method: :delete, remote: true do %>
+                                  <i class="glyphicon glyphicon-level-up"></i> Remove from this box
+                                <% end %>
+                              </li>
+                              <li>
+                                <%= link_to sentence_like_path(sentence_id: sentence.id, id: current_user.likes.where(sentence_id: sentence.id).ids[0] ), method: :delete, data: { confirm: "本当に消しますか？" }, remote: true do %>
+                                  <i class="glyphicon glyphicon-trash"></i> Delete the sentence
+                                <% end %>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-download-alt"></i> Add<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <% @myfolds.each do |fold| %>
+                              <li>
+                                <%= link_to sentence_fold_sentences_path(sentence_id: sentence.id, fold_id: fold.id), method: :post, remote: true do %>
+                                  <i class="glyphicon glyphicon-inbox"></i> <%= fold.name %>
+                                <% end %>
+                              </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        <% end %>
+                        <% if user_signed_in? && sentence.user_id != current_user.id %>
+                          <% if @current_fold.user == current_user %>
+                            <div class="btn-group">
+                              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i><span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <%= link_to edit_sentence_path(id: sentence.id, fold_id: @current_fold.id ), method: :get do %>
+                                    <i class="glyphicon glyphicon-pencil"></i> Edit
+                                  <% end %>
+                                </li>
+                                <li>
+                                  <%= link_to sentence_fold_sentence_path(sentence_id: sentence.id, id: sentence.fold_sentences.where(fold_id: @current_fold.id).ids[0] ), method: :delete, remote: true do %>
+                                    <i class="glyphicon glyphicon-level-up"></i> Remove from this box
+                                  <% end %>
+                                </li>
+                              </ul>
+                            </div>
+                          <% end %>
+                          <div class="btn-group">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-download-alt"></i> Add<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <% @myfolds.each do |fold| %>
+                              <li>
+                                <%= link_to sentence_fold_sentences_path(sentence_id: sentence.id, fold_id: fold.id), method: :post, remote: true do %>
+                                  <%= fold.name %>
+                                <% end %>
+                              </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        <% end %>
+                      </div>
+                    </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><th><%= simple_format(sentence.ja) %></th></tr>
+                    <tr class="en_sentence"><th><%= simple_format(sentence.ch) %></th></tr>
+                    <tr><th><%= simple_format(sentence.pin) %></th></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="wrapper">
+                <button type="button" class="btn btn-original btn-sm" data-toggle="collapse" data-target="#words-open<%= sentence.id %>">Words</button>
+              </div>
+              <div id="words-open<%= sentence.id %>" class="collapse words-open">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <table class="table table-bordered words-table .table-responsive">
+                      <thead>
+                        <tr class="second-color"><th>単語（日本語）</th><th>単語（中国語）</th><th>ピンイン</th></tr>
+                      </thead>
+                      <tbody>
+                        <% sentence.words.each do |word| %>
+                          <tr>
+                            <th><%= word.ja %></th>
+                            <th><%= word.ch %></th>
+                            <th><%= word.pin %></th>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="wrapper-for-pagination second-color ten-radi">
+        <%= paginate @sentences  %>
+      </div>
+    </div>
+  </div>
+</div>
+

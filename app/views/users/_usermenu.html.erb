@@ -1,0 +1,53 @@
+<div class="mypage-menu col-xs-12 col-lg-2">
+  <div class="mypage-user first-color">
+    <ul>
+        <% if @flag == 0  %>
+          <li class="selected"><a href="/users/<%= user.id %>"><i class="glyphicon glyphicon-user"></i> <%= user.nickname %>'s all </a><i class="glyphicon glyphicon-hand-left"></i></li>
+        <% else %>
+          <li><a href="/users/<%= user.id %>"><i class="glyphicon glyphicon-user"></i> <%= user.nickname %>'s all</a></li>
+        <% end %>
+      <% if user_signed_in? && current_user.id == user.id %>
+        <% if user.likes.present? %>
+          <% if @flag == 1  %>
+            <li class="selected"><a href="/users/<%= @user.id %>/likes"><i class="glyphicon glyphicon-heart"></i> Favorites </a><i class="glyphicon glyphicon-hand-left"></i></li>
+          <% else %>
+            <li><a href="/users/<%= @user.id %>/likes"><i class="glyphicon glyphicon-heart"></i> Favorites</a></li>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <% if user_signed_in? %>
+    <div class="boxes first-color">
+      <% if user_signed_in? && current_user.id == user.id %>
+        <div class="create-folder">
+          <ul>
+            <li >
+              <%= form_for (fold) do |f| %>
+                <%= f.text_field :name, placeholder: "New Box", class: "form-control newbox", :required => true %>
+                <%= button_tag( class: "btn btn-original") do %>
+                  Add
+                <% end %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      <% end %>
+      <div class="folds-menu">
+        <ul>
+          <% folds.each do |fold| %>
+            <% if current_page?(fold)  %>
+              <li class="selected">
+                <a href="/folds/<%= fold.id %>"><i class="glyphicon glyphicon-inbox"></i>  <%= fold.name %> <i class="glyphicon glyphicon-hand-left"></i></a>
+              </li>
+            <% else %>
+              <li>
+                <a href="/folds/<%= fold.id %>"><i class="glyphicon glyphicon-inbox"></i>  <%= fold.name %></a>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

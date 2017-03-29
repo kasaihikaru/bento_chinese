@@ -1,0 +1,157 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+
+
+// メニュー
+.index-content .row .mypage-menu{
+  padding: 0;
+}
+.mypage-user{
+  padding: 10px;
+  font-size: 18px;
+  background-color: #FF8000;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px;
+}
+.mypage-user .selected a{
+
+  pointer-events: none;
+  font-weight: bold;
+}
+.boxes{
+  padding: 10px;
+  background-color: #FF8000;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px;
+}
+.mypage-menu ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.mypage-menu ul li{
+  margin: 7px 0;
+}
+.mypage-menu ul li a{
+  color: black;
+}
+.create-folder{
+  padding: 5px;
+}
+.create-folder .newbox{
+  width: 65%;
+  font-size: 15px;
+  display: inline;
+}
+.create-folder .btn{
+  float: right;
+}
+.folds-menu ul{
+  margin: 8px 0 0 8px;
+}
+.folds-menu .selected a{
+
+  pointer-events: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+// プロフィール
+.hasami{
+  margin-bottom: 15px;
+}
+
+.wrapper-profile{
+  background: url("r2.jpg") no-repeat top center;
+  background-color: #FFFFFF;
+  background-size: 100%;
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+.profile{
+  padding: 10px;
+  color: black;
+  border-radius: 15px;
+}
+.profile .p-img{
+  border-radius: 15px;
+  margin: 0 30px;
+  padding: 0;
+}
+.profile .p-img img{
+  width: 100px; height: 100px;
+  object-fit: contain;
+}
+.p-name{
+  padding: 5px;
+  font-size: 30px;
+}
+.p-blog table td a{
+  color: black;
+}
+.p-blog, .p-intro{
+  margin: 10px;
+  padding: 0 10px;
+}
+.p-intro p{
+  margin: 0;
+  padding: 10px;
+}
+.p-edit{
+  float: right;
+}
+.p-edit .btn{
+  display: inline-block;
+}
+
+
+
+// 投稿フォーム
+.wrapper-createsentence{
+  text-align: center;
+  background-size: 100% 100%;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 10px;
+}
+.create-newsentence{
+  display: inline-block;
+  margin: 10px;
+  width: 85%
+}
+.create-newsentence h3{
+  font-size: 25px;
+  // color: white;
+  font-weight: bold;
+}
+.create-newsentence form{
+  text-align: left;
+}
+.create-newsentence .form-group .form-control{
+  height: 100px;
+}
+.create-newsentence .form-group ul li{
+  list-style: none;
+}
+.create-newsentence .form-group .wrapper{
+  text-align: left;
+}
+.create-newsentence .form-group .panel-body{
+  background-color: transparent;
+  padding: 0;
+}
+.create-newsentence .form-group .panel-default, .create-newsentence .form-group .panel-default .collapse{
+  background-color: transparent;
+  border-color: transparent;
+}
+.create-newsentence .form-group .btn{
+  margin-left: 40px;
+}
+// ここまで投稿フォーム

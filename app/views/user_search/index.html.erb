@@ -1,0 +1,79 @@
+<div class="container index-content">
+  <div class="row">
+    <div class="menu first-color ten-radi ten-shad col-xs-12 col-lg-2">
+      <div class="wrapper">
+        <div class="current-sentences">
+          <p>現在のみんなの文</p>
+          <p><span><%= @num %></span> 文</p>
+        </div>
+        <div class="sort-menu btn-group">
+          <button class="btn btn-original dropdown-toggle" data-toggle="dropdown">並び替え<span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="/sentences">新着順</a></li>
+            <li><a href="/sort">お気に入り順</a></li>
+          </ul>
+        </div>
+        <div class="search-menu">
+          <ul>
+            <li>
+              <%= form_tag('/search', method: :get) do %>
+                <input name="keyword" placeholder="英文を検索" type="text" value=""><button class="btn btn-original" title="検索" type="submit"><i class="glyphicon glyphicon-search"></i></button></input>
+              <% end %>
+            </li>
+            <li>
+              <%= form_tag('/ja_search', method: :get) do %>
+                <input name="keyword" placeholder="日本文を検索" type="text" value=""><button class="btn btn-original" title="検索" type="submit"><i class="glyphicon glyphicon-search"></i></button></input>
+              <% end %>
+            </li>
+            <li>
+              <%= form_tag('/user_search', method: :get) do %>
+                <input name="keyword" placeholder="ユーザーを検索" type="text" value=""><button class="btn btn-original" title="検索" type="submit"><i class="glyphicon glyphicon-search"></i></button></input>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main col-md-xs col-lg-10">
+      <div class="result">
+        <h1>　ユーザー検索結果</h1>
+      </div>
+      <% @users.each do |user| %>
+        <div class="wrapper-profile">
+          <div class="profile clearfix">
+            <div class="p-name">
+              <a href="/users/<%= user.id %>"><%= user.nickname %></a>
+            </div>
+            <% if user.avatar? %>
+              <div class="p-img">
+                <%= image_tag(user.avatar, :alt => "プロフィール画像") %>
+              </div>
+            <% end %>
+            <div class="p-blog">
+              <table>
+                <tr>
+                  <th>ブログ、HP：</th>
+                  <td><a href="<%= user.blog %>"><%= user.blog %></a></td>
+                </tr>
+              </table>
+            </div>
+            <div class="p-intro">
+              <dl>
+                <dt>自己紹介：</dt>
+                <dd><%= simple_format(user.introduction) %></dd>
+              </dl>
+            </div>
+            <% if user_signed_in? && current_user.id == user.id %>
+              <div class="p-edit">
+                <a href="/users/edit"><button class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i>編集</button></a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="wrapper-for-pagination second-color ten-radi">
+        <%= paginate @users %>
+      </div>
+    </div>
+  </div>
+</div>

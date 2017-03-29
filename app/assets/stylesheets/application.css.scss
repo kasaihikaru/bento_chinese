@@ -1,0 +1,237 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+body{
+  font-family:"Open Sans" , Roboto , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "Helvetica Neue" , Helvetica , Arial , Verdana , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+}
+
+/*大枠指定*/
+.navbar{
+  background-color: white;
+}
+
+// 背景
+.contents {
+  padding-top: 110px;
+  background: url("mizu.jpg") repeat top left;
+  background-color: #FFFFFF;
+  background-size: 50%;
+}
+.main .post .post-part thead a{
+  color: black;
+}
+
+footer {
+  height: 30px;
+  background-color: #FFFFFF;
+}
+
+
+
+// common
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+a {
+  text-decoration: none;
+}
+body .btn-original{
+  background-color: #4C4C4C;
+  color: white;
+  font-weight: bold;
+}
+.btn-original:hover, .btn-original:focus, .btn-original.focus{
+  color: #B3B3B3;
+}
+body .ten-radi{
+  border-radius: 10px;
+}
+body .fift-radi{
+  border-radius: 10px;
+}
+body .ten-shad{
+  box-shadow: 10px 10px 10px;
+}
+body .first-color{
+  background: url("panda.jpg") repeat top center;
+  background-color: #808080;
+  background-size: 100%;
+}
+body .second-color{
+  background-color: #EAEAEA;
+}
+
+
+
+/*header-container*/
+.header-container{
+}
+
+
+
+
+// お箸、ハンバーガーメニューのボタン調整
+@media screen and (max-width: 770px) {
+  .chop{
+    background:transparent;
+  }
+  .header-container .navbar-nav{
+    margin: 0;
+  }
+}
+@media screen and (min-width: 770px) {
+  .chop{
+    background: url("chops.png") no-repeat;
+    background-position: 0%;
+    background-size: 700px;
+    float: right;
+  }
+  .header-container .navbar-nav {
+    position: relative;
+    min-height: 55px;
+    margin: 20px 135px 20px 0;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .header-container .navbar-nav li a{
+    padding: 0;
+  }
+  .header-container .navbar-nav li{
+    width: 70px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 90px;
+    background: transparent;
+    font-size: 17px;
+    margin-left: 10px;
+  }
+}
+@media screen and (min-width: 380px) {
+  .header-container .navbar-nav li a{
+    padding: 15px 15px;
+  }
+  .header-container .navbar-nav li{
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 90px;
+    background: transparent;
+    font-size: 17px;
+    margin-left: 10px;
+  }
+}
+
+
+
+.navbar-brand{
+  background: url("logo.png") no-repeat;
+  background-size: contain;
+  height: 95px;
+  width: 300px;
+  padding: 0;
+  float: left;
+}
+
+.navbar .navbar-header .hunbarger-color{
+  background-color: white;
+  border-color: black;
+}
+.navbar .navbar-header .hunbarger-color .icon-bar{
+  background-color: black;
+}
+
+
+
+
+//  ヘッダー中央の上へのスムーズスクロール
+// #pageTop{
+//   position: relative;
+//   left: 50%;
+//   float: left;
+//   background: url("logo_transparent.png") no-repeat;
+//   background-size: contain;
+//   height: 89px;
+//   width: 100px;
+//   padding: 0;
+// }
+
+
+
+
+
+/*navbar-nav*/
+
+.header-container .navbar-nav li{
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  line-height: 90px;
+  background: transparent;
+  font-size: 17px;
+  margin-left: 10px;
+}
+
+.header-container .navbar-nav li a{
+  color: black;
+}
+
+.nav li a:hover, .nav li a:focus{
+  background-color: transparent;
+  color: #6A4831;
+  font-size: 15px;
+}
+
+
+/*footer*/
+footer p{
+  font-size: 10px;
+  text-align: center;
+  line-height: 20px;
+  margin: 0;
+  height: 100%;
+}
+
+footer p img{
+  height: 100%;
+}
+
+
+
+
+// デバイス
+.devise-center{
+  margin: 80px auto;
+  width: 100%;
+}
+.devise-center .label{
+  color: black;
+  font-size: 100%;
+  font-weight: normal;
+}
+.red{
+  color: red;
+  font-weight: bold;
+}

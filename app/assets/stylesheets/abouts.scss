@@ -1,0 +1,141 @@
+// Place all the styles related to the abouts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.for-center{
+  margin: 0 auto;
+}
+.for-center-responsive{
+  text-align: center;
+}
+.bottom-margin{
+  margin-bottom: 10px;
+}
+
+
+.level{
+}
+.row .box{
+  margin: 20px 0;
+  box-shadow: 10px 10px 10px;
+  padding: 0;
+  border-radius: 30px;
+}
+.box .upper{
+  background-color: #EAEAEA;
+  text-align: center;
+  border-radius: 30px 30px 0 0;
+}
+.box h1, .box h2, .box h3{
+  margin: 0;
+  color: #000000;
+}
+.box h2{
+  font-family: "Courier",monospace;
+  padding: 20px;
+  font-size: 20px;
+}
+.box h1{
+  font-family: "Hiragino Kaku Gothic Std";
+  padding: 10px;
+  font-weight: bold;
+  font-size: calc(120% + 0.8vw);
+}
+.box h3{
+  padding: 20px;
+  font-size: 18px;
+}
+.lower{
+  background-color: white;
+  border-radius: 0 0 30px 30px;
+}
+.lower img{
+  width: 90%;
+  border-radius: 0 0 30px 30px;
+  padding: 20px;
+}
+.box .lower .how-to-post-img{
+  padding: 0;
+  width: 100%;
+}
+.box2 .for-left{
+  padding-left: 0;
+}
+.box2 .lower img{
+  width: 100%;
+  padding-right: 0;
+}
+.lower h1{
+  padding: 30px;
+  font-size: calc(120% + 0.8vw);
+  margin: 0;
+}
+.lower h2{
+  font-size: calc(80% + 0.8vw);
+}
+.lower h3{
+  font-size: calc(50% + 1vw);
+}
+
+
+.get-started img{
+  display: inline;
+  border-color: black;
+  border: solid 4px;
+  border-radius: 30px;
+  margin: 3px 0;
+}
+
+
+
+
+// 6
+.box3 h1{
+  padding-bottom: 5px;
+}
+.explanation{
+  padding: 10px;
+}
+.explanation p{
+  padding: 0 25px;
+  text-align: left
+}
+.box .lower .translation{
+  display: inline;
+  padding: 0 0 10px,
+}
+
+.box .lower .bigger{
+  font-size: calc(150% + 0.8vw);
+}
+
+
+.contact{
+  text-align: center;
+}
+
+
+
+.develop ul{
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+
+@media screen and (min-width: 544px) {
+  .explanation p{
+    font-size: calc(40% + 1vw);
+  }
+
+
+
+
+}
+
+@media screen and (max-width: 544px) {
+  .explanation p{
+    font-size: calc(60% + 1vw);
+  }
+
+
+}

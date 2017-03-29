@@ -1,0 +1,23 @@
+// Place all the styles related to the folds controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#auto-words, .jumptodetail{
+  float: left;
+}
+.fold-edit h1{
+  text-align: left;
+  padding: 20px 0 0 20px;
+  margin: 0;
+}
+.fold-edit .for-right{
+  text-align: right;
+}
+.fold-edit input{
+  width: 200px;
+  display: inline;
+}
+.fold-edit button{
+  display: inline;
+  margin-right: 5px;
+}

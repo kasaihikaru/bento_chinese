@@ -1,0 +1,2 @@
+module JaSearchHelper
+end

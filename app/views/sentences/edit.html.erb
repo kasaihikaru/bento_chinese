@@ -1,0 +1,46 @@
+<% provide :title, " | 文章を編集" %>
+
+<div class="container index-content">
+  <% if user_signed_in? %>
+    <div class="wrapper-createsentence first-color">
+      <div class="create-newsentence">
+        <%= form_for (@sentence) do |s| %>
+          <div class="form-group">
+            <h3>文章を編集する</h3>
+            <%= s.text_area :ja, value: @originalSen.ja, placeholder: "文章(日本語)", class: "form-control" %>
+            <%= s.text_area :ch, value: @originalSen.ch, placeholder: "文章(英語)", class: "form-control" %>
+          </div>
+          <!-- like機能 -->
+          <%= s.fields_for :like do |like| %>
+            <%= like.hidden_field :user_id ,value: current_user.id %>
+          <% end %>
+          <!-- fold機能 -->
+          <%= s.fields_for :fold_sentence do |fold| %>
+            <%= fold.hidden_field :fold_id ,value: params[:fold_id] %>
+          <% end %>
+          <div class="form-group">
+            <ul>
+            <% @originalSen.words.each do |word| %>
+              <ul>
+                <%= s.fields_for :words do |w| %>
+                  <li>
+                    <%= w.text_field :ja ,value: word.ja ,placeholder: "単語(日本語)"%>
+                    <%= w.text_field :ch ,value: word.ch ,placeholder: "単語(中国語)"%>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+                <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+                <%= render :partial => "users/wordform", :locals=>{:s=>s} %>
+            </ul>
+          </div>
+          <div class="form-group">
+            <%= s.submit "決定", class: "btn btn-original withripple" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
