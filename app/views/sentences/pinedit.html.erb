@@ -1,0 +1,55 @@
+<% provide :title, " | ピンインを編集" %>
+
+<div class="container index-content">
+  <% if user_signed_in? %>
+    <div class="wrapper-createsentence first-color">
+      <div class="create-newsentence">
+        <%= form_for (@originalSen) do |s| %>
+          <div class="form-group">
+            <h3>ピンインを編集する</h3>
+            <ul>
+            <%= s.hidden_field :ja, value: @originalSen.ja, placeholder: "文章(日本語)", class: "form-control" %>
+            <%= s.hidden_field :ch, value: @originalSen.ch, placeholder: "文章(英語)", class: "form-control" %>
+            <li>
+              <%= @originalSen.ja %>
+            </li>
+            <li>
+              <%= @originalSen.ch %>
+            </li>
+            <li>
+              <%= s.text_area :pin, value: @originalSen.pin, placeholder: "ピンイン", class: "form-control" %>
+            </li>
+            </ul>
+          </div>
+          <!-- fold機能 -->
+          <%= s.fields_for :fold_sentence do |fold| %>
+            <%= fold.hidden_field :fold_id ,value: params[:fold_id] %>
+          <% end %>
+          <div class="form-group">
+            <table class="table table-bordered words-table .table-responsive">
+              <thead>
+                <tr class="second-color"><th>単語（日本語）</th><th>単語（中国語）</th><th>ピンイン</th></tr>
+              </thead>
+              <tbody>
+              <% @originalSen.words.each do |word| %>
+                  <%= s.fields_for :words do |w| %>
+                    <%= w.hidden_field :ja ,value: word.ja ,placeholder: "単語(日本語)"%>
+                     <%= w.hidden_field :ch ,value: word.ch ,placeholder: "単語(中国語)"%>
+                    <tr>
+                      <th class="white"><%= word.ja %></th>
+                      <th class="white"><%= word.ch %></th>
+                      <th class="white"><%= w.text_field :pin ,value: word.pin ,placeholder: "ピンイン" %></th>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group">
+            <%= s.submit "決定", class: "btn btn-original withripple", method: :put %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
