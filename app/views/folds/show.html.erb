@@ -116,6 +116,11 @@
                                 <% end %>
                               </li>
                               <li>
+                                <%= link_to pinedit_sentences_path(id: sentence.id, fold_id: @current_fold.id ), method: :get do %>
+                                  <i class="glyphicon glyphicon-pencil"></i> Pinyin Edit
+                                <% end %>
+                              </li>
+                              <li>
                                 <%= link_to sentence_fold_sentence_path(sentence_id: sentence.id, id: sentence.fold_sentences.where(fold_id: @current_fold.id).ids[0] ), method: :delete, remote: true do %>
                                   <i class="glyphicon glyphicon-level-up"></i> Remove from this box
                                 <% end %>

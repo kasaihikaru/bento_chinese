@@ -27,6 +27,20 @@ class SentencesController < ApplicationController
     redirect_to fold_path(params[:sentence][:fold_sentence][:fold_id]) and return
   end
 
+  def pinedit
+    @originalSen = Sentence.find(params[:id])
+    @user = @originalSen.user
+  end
+
+  def update
+    originalSen = Sentence.find(params[:id])
+    originalSen.update(pinyin_update_sentence_params)
+    a = pinyin_update_word_params
+    a.each do |x|
+      Word.create("ja"=>x[:ja], "ch"=>x[:ch], "pin"=>x[:pin], "sentence_id"=>x[:sentence_id])
+    end
+    redirect_to fold_path(params[:sentence][:fold_sentence][:fold_id]) and return
+  end
 
   private
   def sentence_params
@@ -58,6 +72,24 @@ class SentencesController < ApplicationController
           end
         end
         value[:pin] = pinyin
+        arrayedwords << value
+      else
+        next
+      end
+    end
+    return arrayedwords
+  end
+
+  def pinyin_update_sentence_params
+    params.require(:sentence).permit(:ja, :ch, :pin).merge(user_id: current_user.id)
+  end
+
+  def pinyin_update_word_params
+    arrayedwords = []
+    originalSen = Sentence.find(params[:id])
+    params[:sentence][:words_attributes].each do |key,value|
+      if value["ja"].present? && value["ch"].present?
+        value[:sentence_id] = originalSen.id
         arrayedwords << value
       else
         next
