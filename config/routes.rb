@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "sentences#index"
 
-  resources :sentences, only: [:index, :create, :edit] do
+  resources :sentences, only: [:index, :create, :edit, :update] do
+    collection do
+      get 'pinedit'
+    end
     resources :likes, only: [:create, :destroy]
     resources :fold_sentences, only: [:destroy, :create]
   end
