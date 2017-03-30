@@ -26,24 +26,24 @@ autobtn.click(function(){
   var englishsentence = $('#englishsentence').val();
   var words = englishsentence.split("");
   var array = $.grep(words, function(e){return e !== "."
-    && e !== "-"
-    && e !== ","
-    && e !== "1"
-    && e !== "2"
-    && e !== "3"
-    && e !== "4"
-    && e !== "5"
-    && e !== "6"
-    && e !== "7"
-    && e !== "8"
-    && e !== "9"
-    && e !== "0"
-    && e !== "/"
-    && e !== "|"
-    && e !== "&"
-    && e !== "%"
-    && e !== "$"
-    ;});
+&& e !== "-"
+&& e !== ","
+&& e !== "1"
+&& e !== "2"
+&& e !== "3"
+&& e !== "4"
+&& e !== "5"
+&& e !== "6"
+&& e !== "7"
+&& e !== "8"
+&& e !== "9"
+&& e !== "0"
+&& e !== "/"
+&& e !== "|"
+&& e !== "&"
+&& e !== "%"
+&& e !== "$"
+;});
   $.each(array,function(i,word){
     var target = '#sentence_words_attributes_' +i+ '_ch';
     $(target).val(word);
