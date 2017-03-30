@@ -43,6 +43,22 @@ autobtn.click(function(){
 && e !== "&"
 && e !== "%"
 && e !== "$"
+&& e !== "。"
+&& e !== "，"
+&& e !== "！"
+&& e !== "１"
+&& e !== "２"
+&& e !== "３"
+&& e !== "４"
+&& e !== "５"
+&& e !== "６"
+&& e !== "７"
+&& e !== "８"
+&& e !== "９"
+&& e !== "０"
+&& e !== "？"
+&& e !== " "
+&& e !== "　"
 ;});
   $.each(array,function(i,word){
     var target = '#sentence_words_attributes_' +i+ '_ch';
