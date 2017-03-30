@@ -25,7 +25,7 @@ var autobtn=$('#auto-words');
 autobtn.click(function(){
   var englishsentence = $('#englishsentence').val();
   var words = englishsentence.split("");
-  var array = $.grep(words, function(e){return && e !== "."
+  var array = $.grep(words, function(e){return e !== "."
     && e !== "-"
     && e !== ","
     && e !== "1"
